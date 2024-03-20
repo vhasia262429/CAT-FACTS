@@ -1,0 +1,453 @@
+{
+	"info": {
+		"_postman_id": "2dd749a8-bd3b-420c-bfcb-6919ae6cf799",
+		"name": "CAT FACTS API",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "24426787"
+	},
+	"item": [
+		{
+			"name": "BREED",
+			"item": [
+				{
+					"name": "Get a List of Breeds",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test('Response Code should be 200', function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"})\r",
+									"\r",
+									"pm.test('Content-Type should be JSON', function () {\r",
+									"    pm.expect(pm.response.headers.get('Content-Type')).to.eql('application/json');\r",
+									"})\r",
+									"\r",
+									"const json = pm.response.json();\r",
+									"var queryCount = pm.request.url.query.get('limit');\r",
+									"pm.test(\"Number of items in the response body matches the query count\", function () {\r",
+									"    pm.expect(json.data.length).to.eql(parseInt(queryCount));\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response body contains expected fields\", function () {\r",
+									"    json.data.forEach(function(item) {\r",
+									"        pm.expect(item).to.have.property('breed');\r",
+									"        pm.expect(item).to.have.property('country');\r",
+									"        pm.expect(item).to.have.property('origin');\r",
+									"        pm.expect(item).to.have.property('coat');\r",
+									"        pm.expect(item).to.have.property('pattern');\r",
+									"    });\r",
+									"});\r",
+									"\r",
+									"pm.test('`data` should contain the correct fields', function () {\r",
+									"    pm.expect(json.data[0].breed).to.eql('Abyssinian');\r",
+									"    pm.expect(json.data[0].country).to.eql('Ethiopia');\r",
+									"    pm.expect(json.data[0].origin).to.eql('Natural/Standard');\r",
+									"    pm.expect(json.data[0].coat).to.eql('Short');\r",
+									"    pm.expect(json.data[0].pattern).to.eql('Ticked');\r",
+									"})\r",
+									"\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "accept",
+								"value": "application/json"
+							},
+							{
+								"key": "X-CSRF-TOKEN",
+								"value": "ajQUDngD2L8mOYj1X8EcYpyWut6Oa1GNQk9j7Eqd"
+							}
+						],
+						"url": {
+							"raw": "{{url}}/breeds?limit=50",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"breeds"
+							],
+							"query": [
+								{
+									"key": "limit",
+									"value": "50"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get a List of Breeds with Invalid Data",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test('Response Code should be 400', function () {\r",
+									"    pm.response.to.have.status(400);\r",
+									"})\r",
+									"\r",
+									"pm.test('Content-Type should be JSON', function () {\r",
+									"    pm.expect(pm.response.headers.get('Content-Type')).to.eql('application/xml');\r",
+									"})\r",
+									"\r",
+									"const json = pm.response.json();\r",
+									"var queryCount = pm.request.url.query.get('limit');\r",
+									"pm.test(\"Number of items in the response body matches the query count\", function () {\r",
+									"    pm.expect(json.data.length).to.eql(parseInt(queryCount));\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response body contains expected fields\", function () {\r",
+									"    json.data.forEach(function(item) {\r",
+									"        pm.expect(item).to.have.property('Abyssinian');\r",
+									"        pm.expect(item).to.have.property('Ethiopia');\r",
+									"        pm.expect(item).to.have.property('Natural');\r",
+									"        pm.expect(item).to.have.property('Short');\r",
+									"        pm.expect(item).to.have.property('Ticked');\r",
+									"    });\r",
+									"});\r",
+									"\r",
+									"pm.test('`data` should contain the correct fields', function () {\r",
+									"    pm.expect(json.data[0].breed).to.eql('breed');\r",
+									"    pm.expect(json.data[0].country).to.eql('country');\r",
+									"    pm.expect(json.data[0].origin).to.eql('origin');\r",
+									"    pm.expect(json.data[0].coat).to.eql('coat');\r",
+									"    pm.expect(json.data[0].pattern).to.eql('pattern');\r",
+									"})\r",
+									"\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "accept",
+								"value": "application/json"
+							},
+							{
+								"key": "X-CSRF-TOKEN",
+								"value": "ajQUDngD2L8mOYj1X8EcYpyWut6Oa1GNQk9j7Eqd"
+							}
+						],
+						"url": {
+							"raw": "{{url}}/breeds?limit=100",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"breeds"
+							],
+							"query": [
+								{
+									"key": "limit",
+									"value": "100"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "FACTS",
+			"item": [
+				{
+					"name": "Get a list of Facts",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test('Response Code should be 200', function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"})\r",
+									"\r",
+									"pm.test('Content-Type should be JSON', function () {\r",
+									"    pm.expect(pm.response.headers.get('Content-Type')).to.eql('application/json');\r",
+									"})\r",
+									"\r",
+									"const json = pm.response.json();\r",
+									"var limitCount = pm.request.url.query.get('limit');\r",
+									"pm.test(\"Number of items in the response body should not exceed the query limit\", function () {\r",
+									"    pm.expect(json.data.length).to.be.at.most(parseInt(limitCount));\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response body contains expected fields\", function () {\r",
+									"    json.data.forEach(function(item) {\r",
+									"        pm.expect(item).to.have.property('fact');\r",
+									"        pm.expect(item).to.have.property('length');\r",
+									"    });\r",
+									"});\r",
+									"\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "accept",
+								"value": "application/json"
+							},
+							{
+								"key": "X-CSRF-TOKEN",
+								"value": "ajQUDngD2L8mOYj1X8EcYpyWut6Oa1GNQk9j7Eqd"
+							}
+						],
+						"url": {
+							"raw": "{{url}}/facts?max_length=329&limit=50",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"facts"
+							],
+							"query": [
+								{
+									"key": "max_length",
+									"value": "329"
+								},
+								{
+									"key": "limit",
+									"value": "50"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get a List of Fact with Invalid Data",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test('Response Code should be 400', function () {\r",
+									"    pm.response.to.have.status(400);\r",
+									"})\r",
+									"\r",
+									"pm.test('Content-Type should be JSON', function () {\r",
+									"    pm.expect(pm.response.headers.get('Content-Type')).to.eql('application/xml');\r",
+									"})\r",
+									"\r",
+									"const json = pm.response.json();\r",
+									"var queryCount = pm.request.url.query.get('queryCount');\r",
+									"pm.test(\"Number of items in the response body should not exceed the query limit\", function () {\r",
+									"    pm.expect(json.data.length).to.be.at.most(parseInt(queryCount));\r",
+									"});\r",
+									"\r",
+									"\r",
+									"\r",
+									"pm.test(\"Response body contains expected fields\", function () {\r",
+									"    pm.expect(json).to.have.property('fact');\r",
+									"    pm.expect(json).to.have.property('length');\r",
+									"});\r",
+									"\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "accept",
+								"value": "application/json"
+							},
+							{
+								"key": "X-CSRF-TOKEN",
+								"value": "cNobN2y2soA5sQrb6pJ7BEFb0XnOGLXD3qeYrnUP"
+							}
+						],
+						"url": {
+							"raw": "https://catfact.ninja/facts?max_length=1&limit=23",
+							"protocol": "https",
+							"host": [
+								"catfact",
+								"ninja"
+							],
+							"path": [
+								"facts"
+							],
+							"query": [
+								{
+									"key": "max_length",
+									"value": "1"
+								},
+								{
+									"key": "limit",
+									"value": "23"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Random Facts",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test('Response Code should be 200', function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"})\r",
+									"\r",
+									"pm.test('Content-Type should be JSON', function () {\r",
+									"    pm.expect(pm.response.headers.get('Content-Type')).to.eql('application/json');\r",
+									"})\r",
+									"\r",
+									"const json = pm.response.json();\r",
+									"var maxLength = pm.request.url.query.get('max_length');\r",
+									"pm.test(\"Number of items in the response body should not exceed the query max_length\", function () {\r",
+									"    pm.expect(json.length).to.be.at.most(parseInt(maxLength));\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response body contains expected fields\", function () {\r",
+									"    pm.expect(json).to.have.property('fact');\r",
+									"    pm.expect(json).to.have.property('length');\r",
+									"});\r",
+									"pm.test(\"Fact value data type should be String\", function () {\r",
+									"    pm.expect(typeof json.fact).to.eql('string');\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Length data type should be Number\", function () {\r",
+									"    pm.expect(typeof json.length).to.eql('number');\r",
+									"});\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "accept",
+								"value": "application/json"
+							},
+							{
+								"key": "X-CSRF-TOKEN",
+								"value": "ajQUDngD2L8mOYj1X8EcYpyWut6Oa1GNQk9j7Eqd"
+							}
+						],
+						"url": {
+							"raw": "https://catfact.ninja/fact?max_length=50",
+							"protocol": "https",
+							"host": [
+								"catfact",
+								"ninja"
+							],
+							"path": [
+								"fact"
+							],
+							"query": [
+								{
+									"key": "max_length",
+									"value": "50"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get a Random Facts with Invalid Data",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test('Response Code should be 400', function () {",
+									"    pm.response.to.have.status(400);",
+									"})",
+									"",
+									"pm.test('Content-Type should be JSON', function () {",
+									"    pm.expect(pm.response.headers.get('Content-Type')).to.eql('application/xml');",
+									"})",
+									"",
+									"const json = pm.response.json();",
+									"var queryCount = pm.request.url.query.get('limit');",
+									"pm.test(\"Number of items in the response body should not exceed the query limit\", function () {",
+									"    pm.expect(json.data.length).to.be.at.most(parseInt(queryCount));",
+									"});",
+									"",
+									"",
+									"pm.test(\"Response body contains expected fields\", function () {",
+									"    pm.expect(json).to.have.property('fact');",
+									"    pm.expect(json).to.have.property('length');",
+									"});",
+									"",
+									"",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "accept",
+								"value": "application/json"
+							},
+							{
+								"key": "X-CSRF-TOKEN",
+								"value": "cNobN2y2soA5sQrb6pJ7BEFb0XnOGLXD3qeYrnUP"
+							}
+						],
+						"url": {
+							"raw": "{{url}}/fact?max_length=1",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"fact"
+							],
+							"query": [
+								{
+									"key": "max_length",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
